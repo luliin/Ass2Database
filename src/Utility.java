@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * Created by Julia Wigenstedt
  * Date: 2020-10-08
- * Time: 19:26
+ * Time: 19:30
  * Project: Ass2Database
  * Copyright: MIT
  */
