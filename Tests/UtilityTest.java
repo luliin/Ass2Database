@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Scanner;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,13 +15,13 @@ public class UtilityTest {
 
     Utility utility = new Utility();
 
-    public UtilityTest() throws ClassNotFoundException {
+    public UtilityTest() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
     }
 
     @Test
     public final void createListFromFileTest(){
-            assertEquals(utility.customers.size(), 14);
-            assertEquals(utility.customers.get(0).getName(), "Alhambra Aromes");
+            assertEquals(utility.customersDatabase.size(), 14);
+            assertEquals(utility.customersDatabase.get(0).getName(), "Alhambra Aromes");
 
     }
     @Test
@@ -32,7 +29,7 @@ public class UtilityTest {
 
             utility.deSerialize();
             assertDoesNotThrow(utility::deSerialize);
-            assertEquals(utility.customers.get(2).getName(), "Chamade Coriola");
+            assertEquals(utility.customersDatabase.get(2).getName(), "Chamade Coriola");
 
     }
     @Test

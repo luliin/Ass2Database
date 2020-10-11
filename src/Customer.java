@@ -18,13 +18,34 @@ public class Customer implements Serializable {
     List<String> listOfTrainingSessions = new ArrayList<>();
     protected boolean isActiveMember;
 
-    public Customer(String name, String personID, LocalDate membershipPaid) {
+    public Customer(){}
+
+    public Customer(String name, String personID, LocalDate membershipPaid){
+        this.name=name;
+        this.personID = personID;
+        this.membershipPaid = membershipPaid;
+        if(membershipPaid.plusYears(1).isAfter(LocalDate.now())){
+            isActiveMember=true;
+        } else isActiveMember=false;
+    }
+
+    public Customer(String name, String personID, LocalDate membershipPaid, String list) {
         this.name=name;
         this.personID=personID;
         this.membershipPaid=membershipPaid;
         if(membershipPaid.plusYears(1).isAfter(LocalDate.now())){
             isActiveMember=true;
-        } else isActiveMember=false;
+        } else {
+            isActiveMember = false;
+        }
+        if(!list.isEmpty()) {
+            String[] listSplit = list.split(",");
+            for (String s : listSplit) {
+                listOfTrainingSessions.add(s.trim());
+            }
+        } else {
+            listOfTrainingSessions.clear();
+        }
     }
 
     public boolean isActiveMember(LocalDate membershipPaid){
@@ -59,11 +80,36 @@ public class Customer implements Serializable {
             return message;
         } else {
             StringBuilder sb = new StringBuilder();
+            sb.append(getName()+ "\n");
             for (String s : listOfTrainingSessions) {
-                sb.append(s);
+                sb.append(s + "\n");
             }
             JOptionPane.showMessageDialog(null, sb.toString());
             return sb.toString();
         }
+    }
+
+    public String listOfTrainingSessions(){
+        if(listOfTrainingSessions.isEmpty()){
+            return null;
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (String s : listOfTrainingSessions) {
+                sb.append(s+",");
+            }
+            return sb.toString();
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
+
+    public void setActiveMember(boolean activeMember) {
+        isActiveMember = activeMember;
     }
 }

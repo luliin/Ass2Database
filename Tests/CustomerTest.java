@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerTest {
 
     Customer customer = new Customer("Julia Wigenstedt", "9003111234",
-            LocalDate.of(2019,10,22));
+            LocalDate.of(2019,10,22), "2020-03-11");
 
 
     @Test

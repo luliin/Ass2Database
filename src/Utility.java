@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,26 +14,33 @@ import java.util.Scanner;
  * Copyright: MIT
  */
 public class Utility {
+    Database database;
     List<Customer> customers;
+    List<Customer> customersDatabase;
 
-    public Utility() throws ClassNotFoundException {
-        customers = new ArrayList<>();
-        createListFromFile();
+    public Utility() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+        database = new Database();
+        customersDatabase = new ArrayList<>();
+        customersDatabase = database.getCustomers();
+        if(customersDatabase.isEmpty()) {
+            createListFromFile();
+            database.createDatabase(customersDatabase);
+        }
     }
 
     public void createListFromFile() throws ClassNotFoundException {
-        deSerialize();
-        if (customers.isEmpty()) {
+//        deSerialize();
+        if (customersDatabase.isEmpty()) {
             try (Scanner in = new Scanner(new FileReader("customers.txt")).useDelimiter(",|\\n")) {
                 while (in.hasNextLine()) {
                     String personId = in.next().trim();
                     String name = in.next().trim();
                     String dateString = in.next().trim();
                     LocalDate date = LocalDate.parse(dateString);
-                    customers.add(new Customer(name, personId, date));
+                    customersDatabase.add(new Customer(name, personId, date));
                 }
                 System.out.println("Fil skapad");
-                serialize();
+//                serialize();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -41,7 +49,7 @@ public class Utility {
 
     public void serialize() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("customers.ser"))) {
-            out.writeObject(customers);
+            out.writeObject(customersDatabase);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +57,7 @@ public class Utility {
 
     public void deSerialize() throws ClassNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("customers.ser"))) {
-            customers = (List<Customer>) in.readObject();
+            customersDatabase = (List<Customer>) in.readObject();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -70,7 +78,7 @@ public class Utility {
     }
 
     public Customer getCustomer(String input) {
-        for (Customer customer : customers) {
+        for (Customer customer : customersDatabase) {
             if (customer.getName().equalsIgnoreCase(input) || customer.getPersonID().equalsIgnoreCase(input)) {
                 return customer;
             }
@@ -78,9 +86,9 @@ public class Utility {
         return null;
     }
 
-    public void program() throws ClassNotFoundException {
+    public void program() throws ClassNotFoundException, SQLException {
         while (true) {
-            deSerialize();
+//            deSerialize();
             String[] options = {"Receptionist", "Tränare"};
             int user = JOptionPane.showOptionDialog(null,
                     "Vem använder programmet?",
@@ -99,7 +107,7 @@ public class Utility {
         }
     }
 
-    public void receptionist() {
+    public void receptionist() throws SQLException {
         while (true) {
             String input = getString("Ange kundens namn eller personnummer",
                     "Du måste ange antingen namn eller personnummer.",
@@ -111,7 +119,9 @@ public class Utility {
                     print(customer.getName() + " har ett aktivt medlemskap");
                     customer.listOfTrainingSessions.add(LocalDate.now().toString());
                     writeToFile();
-                    serialize();
+//                    serialize();
+                    database.addListToDatabase(customersDatabase.indexOf(customer)+1, customer.listOfTrainingSessions());
+
                 } else {
                     print(customer.getName() + " har inte längre ett aktivt medlemskap. " +
                             "Sista giltighetsdag var " + customer.membershipPaid.plusYears(1));
@@ -164,7 +174,7 @@ public class Utility {
 
     public void writeToFile() {
         try (PrintWriter out = new PrintWriter(new FileWriter("listOfTrainingSessions.txt", true))) {
-            for (Customer customer : customers) {
+            for (Customer customer : customersDatabase) {
                 for (String s : customer.listOfTrainingSessions) {
                     out.printf("%s, %s\n%s\n", customer.getName(), customer.getPersonID(), s);
                 }
@@ -174,8 +184,12 @@ public class Utility {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
         Utility utility = new Utility();
+        System.out.println(utility.customersDatabase.get(6).listOfTrainingSessions());
+        for(var c: utility.customersDatabase){
+            System.out.println(c.getName() + ", " + c.getPersonID() + ", " + c.getMembershipPaid());
+        }
         utility.program();
     }
 }
