@@ -11,14 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 /**
  * Created by Julia Wigenstedt
  * Date: 2020-10-11
- * Time: 21:53
+ * Time: 17:25
  * Project: Ass2Database
  * Copyright: MIT
  */
 public class DatabaseTest {
 
     Database database = new Database();
-
 
     public DatabaseTest() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
     }
