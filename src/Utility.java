@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Julia Wigenstedt
+ * Created by Julia Wigenstedt 
  * Date: 2020-10-08
  * Time: 19:30
  * Project: Ass2Database
@@ -173,7 +173,7 @@ public class Utility {
     }
 
     public void writeToFile() {
-        try (PrintWriter out = new PrintWriter(new FileWriter("listOfTrainingSessions.txt", true))) {
+        try (PrintWriter out = new PrintWriter(new FileWriter("listOfTrainingSessions.txt"))) {
             for (Customer customer : customersDatabase) {
                 for (String s : customer.listOfTrainingSessions) {
                     out.printf("%s, %s\n%s\n", customer.getName(), customer.getPersonID(), s);
@@ -186,10 +186,6 @@ public class Utility {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
         Utility utility = new Utility();
-        System.out.println(utility.customersDatabase.get(6).listOfTrainingSessions());
-        for(var c: utility.customersDatabase){
-            System.out.println(c.getName() + ", " + c.getPersonID() + ", " + c.getMembershipPaid());
-        }
         utility.program();
     }
 }
