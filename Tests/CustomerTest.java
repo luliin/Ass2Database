@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerTest {
 
     Customer customer = new Customer("Julia Wigenstedt", "9003111234",
-            LocalDate.of(2019,10,22), "2020-03-11");
+            LocalDate.of(2019,10,22));
 
 
     @Test
@@ -27,6 +27,6 @@ public class CustomerTest {
     public final void printListOfTrainingSessionsTest(){
         assertEquals(customer.printListOfTrainingSessions(), "Julia Wigenstedt har inga loggade träningspass.");
         customer.listOfTrainingSessions.add(LocalDate.now().toString());
-        assertEquals(customer.printListOfTrainingSessions(), "2020-10-08");
+        assertEquals(customer.printListOfTrainingSessions(), "Julia Wigenstedt\n"+LocalDate.now().toString()+"\n");
     }
 }
