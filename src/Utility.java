@@ -176,7 +176,7 @@ public class Utility {
         try (PrintWriter out = new PrintWriter(new FileWriter("listOfTrainingSessions.txt"))) {
             out.println("Lista över träningssessioner per kund:\n");
             for (Customer customer : customersDatabase) {
-                for (String s : customer.listOfTrainingSessions) {
+                for (String s : customer.getListOfTrainingSessions()) {
                     out.printf("%s, %s\n%s\n", customer.getName(), customer.getPersonID(), s);
                 }
             }
