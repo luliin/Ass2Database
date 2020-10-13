@@ -31,7 +31,7 @@ public class DatabaseTest {
         date ="2020-03-23";
         database.addListToDatabase(id, date);
         Statement statement = database.statement;
-        String query = "SELECT * FROM customer ;";
+        String query = "SELECT * FROM customers ;";
         ResultSet rs = statement.executeQuery(query);
         if (rs.next()) {
             System.out.println(rs.getString(5));
