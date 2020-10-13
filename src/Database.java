@@ -19,7 +19,7 @@ public class Database {
     ResultSet resultSet;
     private String url = "jdbc:mysql://localhost:3306/customerdb?autoReconnect=true&useSSL=false";
     private String user = "root", pass = "Wigenst1!";
-    private String db_table = "customer";
+    private String db_table = "customers";
 
 
     public Database() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
@@ -41,7 +41,7 @@ public class Database {
 
 
             statement.executeUpdate(
-                    "INSERT IGNORE into customer" +
+                    "INSERT IGNORE into customers" +
                             "( customerID, name, personId, membershipPaid, list)" +
                             "values ('"+counter+"','"+name+"','"+pId+"','"+date+"', '"+list+"')");
         }
@@ -49,7 +49,7 @@ public class Database {
 
     public void addListToDatabase(int id, String string) throws SQLException {
         connection = DriverManager.getConnection(url, user, pass);
-        String query = "update customer set list = ? where customerID = ?";
+        String query = "update customers set list = ? where customerID = ?";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString(1, string);
         preparedStmt.setInt(2, id);
