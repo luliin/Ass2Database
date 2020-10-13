@@ -134,7 +134,7 @@ public class Utility {
                     "Vill du söka igen?",
                     "Sök igen?", JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (selection == 1) {
+            if (selection != 0) {
                 break;
             }
         }
@@ -166,7 +166,7 @@ public class Utility {
                     null,
                     options,
                     options[0]);
-            if (selection == 1) {
+            if (selection != 0) {
                 break;
             }
         }
