@@ -47,9 +47,10 @@ public class Utility {
         }
     }
 
+/*
     public void serialize() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("customers.ser"))) {
-            out.writeObject(customersDatabase);
+            out.writeObject(customers);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -57,11 +58,12 @@ public class Utility {
 
     public void deSerialize() throws ClassNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("customers.ser"))) {
-            customersDatabase = (List<Customer>) in.readObject();
+            customers = (List<Customer>) in.readObject();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+*/
 
     public void print(String message) {
         JOptionPane.showMessageDialog(null, message);
