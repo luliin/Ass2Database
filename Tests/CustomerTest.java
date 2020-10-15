@@ -18,15 +18,22 @@ public class CustomerTest {
 
 
     @Test
-    public final void constructorTest(){
-        assertTrue(customer.isActiveMember);
+    public final void isActiveMemberTest(){
+        assertTrue(customer.isActiveMember());
+
+    }
+
+    @Test
+    public final void constructorTest() {
+
         assertEquals(customer.getName(), "Julia Wigenstedt");
+        assertTrue(customer.listOfTrainingSessions.isEmpty());
     }
 
     @Test
     public final void printListOfTrainingSessionsTest(){
-        assertEquals(customer.printListOfTrainingSessions(), "Julia Wigenstedt har inga loggade träningspass.");
+        assertNull(customer.listOfTrainingSessions());
         customer.listOfTrainingSessions.add(LocalDate.now().toString());
-        assertEquals(customer.printListOfTrainingSessions(), "Julia Wigenstedt\n"+LocalDate.now().toString()+"\n");
+        assertEquals(customer.listOfTrainingSessions(), LocalDate.now().toString() +",");
     }
 }
