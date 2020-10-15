@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test;
-
 import java.sql.SQLException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -32,18 +30,4 @@ public class UtilityTest {
         name = "Mitsuko Mayotte";
         assertNotNull(utility.getCustomer(name));
     }
-
-//    @Test
-//    public final void deSerializeTest() throws ClassNotFoundException {
-//
-//            utility.deSerialize();
-//            assertDoesNotThrow(utility::deSerialize);
-//            assertEquals(utility.customersDatabase.get(2).getName(), "Chamade Coriola");
-
-//    }
-
 }
-
-
-
-

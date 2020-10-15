@@ -1,0 +1,10 @@
+Lista över träningssessioner per kund:
+
+Alhambra Aromes, 7603021234
+2019-07-01
+Bear Belle, 8104021234
+2020-03-23
+Diamanda Djedi, 7608021234
+2020-10-15
+Greger Ganache, 7512166544
+2020-10-15
