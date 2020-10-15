@@ -11,7 +11,7 @@ import java.util.List;
  * Project: Ass2Database
  * Copyright: MIT
  */
-public class Customer implements Serializable {
+public class Customer {
     protected String name;
     protected String personID;
     protected LocalDate membershipPaid;
@@ -24,27 +24,19 @@ public class Customer implements Serializable {
         this.name=name;
         this.personID = personID;
         this.membershipPaid = membershipPaid;
-        if(membershipPaid.plusYears(1).isAfter(LocalDate.now())){
-            isActiveMember=true;
-        } else isActiveMember=false;
+
     }
 
     public Customer(String name, String personID, LocalDate membershipPaid, String list) {
         this.name=name;
         this.personID=personID;
         this.membershipPaid=membershipPaid;
-        if(membershipPaid.plusYears(1).isAfter(LocalDate.now())){
-            isActiveMember=true;
-        } else {
-            isActiveMember = false;
-        }
+
         if(!list.isEmpty()) {
             String[] listSplit = list.split(",");
             for (String s : listSplit) {
                 listOfTrainingSessions.add(s.trim());
             }
-        } else {
-            listOfTrainingSessions.clear();
         }
     }
 
