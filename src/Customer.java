@@ -62,6 +62,7 @@ public class Customer {
     }
 
     public boolean isActiveMember() {
+        isActiveMember = membershipPaid.plusYears(1).isAfter(LocalDate.now());
         return isActiveMember;
     }
 
