@@ -69,12 +69,12 @@ public class Utility {
         JOptionPane.showMessageDialog(null, message);
     }
 
-    public String getString(String question, String message, String title) {
+    public String getString(String question, String errorMessage, String title) {
         String answer = null;
         while (answer == null || answer.isEmpty()) {
             answer = JOptionPane.showInputDialog(null, question, title, JOptionPane.QUESTION_MESSAGE);
             if (answer == null || answer.isEmpty())
-                print(message);
+                print(errorMessage);
         }
         return answer;
     }
