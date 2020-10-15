@@ -1,10 +1,7 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by Julia Wigenstedt
@@ -17,9 +14,10 @@ public class Database {
     Connection connection;
     Statement statement;
     ResultSet resultSet;
-    private String url = "jdbc:mysql://localhost:3306/customerdb?autoReconnect=true&useSSL=false";
-    private String user = "root", pass = "Wigenst1!";
-    private String db_table = "customers";
+    private final String url = "jdbc:mysql://localhost:3306/customerdb?autoReconnect=true&useSSL=false";
+    private final String user = "root";
+    private final String pass = "Wigenst1!";
+    private final String db_table = "customers";
 
 
     public Database() throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException {
