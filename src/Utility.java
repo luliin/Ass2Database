@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class Utility {
     Database database;
-    List<Customer> customers;
+    //  List<Customer> customers;
     List<Customer> customersDatabase;
 
     public Utility() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
@@ -28,8 +28,8 @@ public class Utility {
         }
     }
 
-    public void createListFromFile() throws ClassNotFoundException {
-//        deSerialize();
+    public void createListFromFile() {
+
         if (customersDatabase.isEmpty()) {
             try (Scanner in = new Scanner(new FileReader("customers.txt")).useDelimiter(",|\\n")) {
                 while (in.hasNextLine()) {
@@ -40,30 +40,13 @@ public class Utility {
                     customersDatabase.add(new Customer(name, personId, date));
                 }
                 System.out.println("Fil skapad");
-//                serialize();
+
             } catch (FileNotFoundException e) {
+                System.out.println("Filen kunde inte hittas.");
                 e.printStackTrace();
             }
         }
     }
-
-/*
-    public void serialize() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("customers.ser"))) {
-            out.writeObject(customers);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void deSerialize() throws ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("customers.ser"))) {
-            customers = (List<Customer>) in.readObject();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-*/
 
     public void print(String message) {
         JOptionPane.showMessageDialog(null, message);
@@ -88,9 +71,9 @@ public class Utility {
         return null;
     }
 
-    public void program() throws ClassNotFoundException, SQLException {
+    public void program() throws SQLException {
         while (true) {
-//            deSerialize();
+
             String[] options = {"Receptionist", "Tränare"};
             int user = JOptionPane.showOptionDialog(null,
                     "Vem använder programmet?",
@@ -114,22 +97,8 @@ public class Utility {
             String input = getString("Ange kundens namn eller personnummer",
                     "Du måste ange antingen namn eller personnummer.",
                     "Ange namn eller personnummer").trim();
-            if (getCustomer(input) != null) {
-                Customer customer = getCustomer(input);
-                customer.isActiveMember(customer.membershipPaid);
-                if (customer.isActiveMember()) {
-                    print(customer.getName() + " har ett aktivt medlemskap");
-                    customer.listOfTrainingSessions.add(LocalDate.now().toString());
-                    writeToFile();
-//                    serialize();
-                    database.addListToDatabase(customersDatabase.indexOf(customer)+1, customer.listOfTrainingSessions());
-
-                } else {
-                    print(customer.getName() + " har inte längre ett aktivt medlemskap. " +
-                            "Sista giltighetsdag var " + customer.membershipPaid.plusYears(1));
-                }
-            } else {
-                print("Obehörig person.");
+            if(printMembershipInfo(getCustomer(input))){
+                writeToFile();
             }
             String[] options = {"Ja", "Nej"};
             int selection = JOptionPane.showOptionDialog(null,
@@ -147,18 +116,7 @@ public class Utility {
             String input = getString("Ange kundens namn eller personnummer",
                     "Du måste ange antingen namn eller personnummer.",
                     "Ange namn eller personnummer").trim();
-            if (getCustomer(input) != null) {
-                Customer customer = getCustomer(input);
-                customer.isActiveMember(customer.membershipPaid);
-                if (customer.isActiveMember()) {
-                    customer.printListOfTrainingSessions();
-                } else {
-                    print(customer.getName() + " har inte längre ett aktivt medlemskap. " +
-                            "Sista giltighetsdag var " + customer.membershipPaid.plusYears(1));
-                }
-            } else {
-                print("Obehörig person.");
-            }
+            printMembershipInfo(getCustomer(input));
             String[] options = {"Ja", "Nej"};
             int selection = JOptionPane.showOptionDialog(null,
                     "Vill du söka igen?",
@@ -171,6 +129,23 @@ public class Utility {
             if (selection != 0) {
                 break;
             }
+        }
+    }
+
+    public boolean printMembershipInfo(Customer customer) {
+        if (customer != null) {
+            customer.isActiveMember();
+            if (customer.isActiveMember()) {
+                customer.printListOfTrainingSessions();
+                return true;
+            } else {
+                print(customer.getName() + " har inte längre ett aktivt medlemskap. " +
+                        "Sista giltighetsdag var " + customer.membershipPaid.plusYears(1));
+                return true;
+            }
+        } else {
+            print("Obehörig person.");
+            return false;
         }
     }
 
